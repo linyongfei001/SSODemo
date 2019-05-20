@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<context:component-scan base-package="service"></context:component-scan>
+	
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+	<!-- mapper的创建 -->
+	<!-- 1.数据源连接交给spring    提供连接 -->
+	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- 四个参数 -->
+		<property name="driverClassName" value="${db.driver}"></property>
+		<property name="url" value="${db.url}"></property>
+		<property name="username" value="${db.user}"></property>
+		<property name="password" value="${db.pwd}"></property>
+	</bean>
+	
+	
+	<!-- 2.ssf创建交给spring -->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds"></property>
+		<property name="configLocation" value="classpath:mybatis.cfg.xml"></property>		
+	</bean>
+	
+	
+	<!-- 3.Sqlsession创建交给spring  (可省略) -->
+	
+	<!-- 4.mapper创建交给spring 批量扫描mapper包，创建代理对象-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+		<!-- 告诉扫描哪个包 -->
+		<property name="basePackage" value="mapper"></property>
+		<!-- 配置Sqlsession信息，用ssf工厂配置 -->
+		<property name="sqlSessionFactoryBeanName" value="ssf"></property>
+	</bean>
+	
+	<!-- 5.配置声明式事务 -->
+		<!-- 5.1配置事务管理器 -->
+		<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+     		<property name="dataSource" ref="ds"></property>
+     	</bean>
+		<!-- 5.2事务策略 -->
+		<tx:advice id="txAdvice" transaction-manager="txManager">
+			<tx:attributes>
+				<tx:method name="login" read-only="true"/>
+				<tx:method name="register" propagation="REQUIRED"/>
+				<tx:method name="save*" propagation="REQUIRED"/>
+				<tx:method name="update*" propagation="REQUIRED"/>
+				<tx:method name="delete*" propagation="REQUIRED"/>						
+			</tx:attributes>
+		</tx:advice>
+		
+		<!-- 5.3织入事务 -->
+		<aop:config>
+     		<!--配置切入点  -->
+     		<aop:pointcut expression="execution(* service..*(..))" id="pointCut"/>
+     		<!-- 配置增强 -->
+     		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut"/>
+     	</aop:config>
+		
+	
+</beans>
