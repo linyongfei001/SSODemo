@@ -1,3 +1,5 @@
+package testneo4j;
+
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import java.io.File;
@@ -6,7 +8,7 @@ import java.io.File;
 直接操作数据库文件（确保服务已关闭）：
  */
 
-public class Neo4jJavaAPIDBOperation {
+public class Neo4jJavaAPIDBOperation1 {
     public static void main(String[] args) {
         GraphDatabaseFactory dbFactory = new GraphDatabaseFactory();
         GraphDatabaseService db = dbFactory.newEmbeddedDatabase(new File("D:/soft/neo4j-community-3.4.1/data/databases/graph.db"));
