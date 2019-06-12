@@ -15,7 +15,7 @@ public class TestFileInputStream1 {
 		//FileNotFoundException
 //		FileInputStream fin = new FileInputStream("d:/data/a.txt");
 //		FileInputStream fin = new FileInputStream(new File("d:/data/a.txt"));
-		File f = new File("d:/data/a.txt");
+		File f = new File("d:/out/a.txt");
 		FileInputStream fin = new FileInputStream(f);
 		//转换流：  字符流      把 字节流 包装成 字符流
 		InputStreamReader ir = new InputStreamReader(fin);
