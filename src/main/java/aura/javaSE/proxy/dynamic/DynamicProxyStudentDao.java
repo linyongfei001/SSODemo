@@ -1,4 +1,4 @@
-package aura.javaSE.dynamic;
+package aura.javaSE.proxy.dynamic;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -1,4 +1,4 @@
-package aura.javaSE.dynamic;
+package aura.javaSE.proxy.dynamic;
 
 public class Text01 {
 	public static void main(String[] args) {

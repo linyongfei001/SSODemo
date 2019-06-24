@@ -1,25 +1,31 @@
-package aura.javaSE.dynamic;
+package aura.javaSE.proxy.dynamic;
 
 import java.util.List;
 
-public class BaseStudentDao implements BaseDao{
+public class ProxyBaseStudentdao implements BaseDao{
+	BaseStudentDao bsd;
+	public ProxyBaseStudentdao(){
+		this.bsd=new BaseStudentDao();
+	}
 
 	@Override
 	public int insert(Person p) {
-		// TODO Auto-generated method stub
-		return p==null?0:1;
+		System.out.println("开始插入啦");
+		int res=bsd.insert(p);
+		System.out.println("成功啦");
+		return res;
 	}
 
 	@Override
 	public int delete(int id) {
 		// TODO Auto-generated method stub
-		return id>0?1:0;
+		return 0;
 	}
 
 	@Override
 	public int update(Person p) {
 		// TODO Auto-generated method stub
-		return p==null?0:1;
+		return 0;
 	}
 
 	@Override

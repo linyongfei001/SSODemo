@@ -23,7 +23,7 @@ object SparkSQL_Hive233 {
     val hiveContext: HiveContext = new HiveContext(sparkContext)
 
 
-    hiveContext.sql("select * from myhive.student").show(30)
+    hiveContext.sql("select * from myjob.student").show(30)
 
 
     sparkContext.stop()
