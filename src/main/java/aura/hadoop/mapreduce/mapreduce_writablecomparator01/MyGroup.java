@@ -3,6 +3,11 @@ package aura.hadoop.mapreduce.mapreduce_writablecomparator01;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 
+/**
+ * 注意点：当我们既有排序需求又有分组需求的时候，分组字段必须是排序字段前几个，
+ * 排序字段中必须有分组字段，分组的前提是所有要分到一组的数据必须相邻的，
+ * compare()返回值0，返回值为0 的是一组。   是相邻之间进行比较的。
+ */
 public class MyGroup extends WritableComparator{
 	/**
 	 * compare方法中传入的两个参数：

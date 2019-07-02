@@ -1,7 +1,6 @@
 package aura.hadoop.mapreduce.mapreduce_writablecomparable02;
 
 import java.io.IOException;
-
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 
